@@ -64,7 +64,7 @@ def check_permissions(permission, payload):
 
 
 def verify_decode_jwt(token):
-    url_string = "https://{}/.well-known/jwks.json".format(AUTH0_DOMAIN)
+    url_string = f"https://{AUTH0_DOMAIN}/.well-known/jwks.json"
     json_url = urlopen(url_string)
     jwks = json.loads(json_url.read())
     unverified_header = jwt.get_unverified_header(token)
@@ -93,7 +93,7 @@ def verify_decode_jwt(token):
                 rsa_key,
                 algorithms=ALGORITHMS,
                 audience=API_AUDIENCE,
-                issuer='https://{}/'.format(AUTH0_DOMAIN)
+                issuer=f'https://{AUTH0_DOMAIN}/'
             )
 
             return payload
