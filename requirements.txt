@@ -17,3 +17,6 @@ python-editor==1.0.4
 six==1.16.0
 SQLAlchemy==1.4.18
 Werkzeug==2.0.1
+pip~=22.2.2
+setuptools~=65.3.0
+jose~=1.0.0
