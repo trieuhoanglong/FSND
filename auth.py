@@ -135,7 +135,7 @@ def requires_auth(permission=''):
                 raise abort(authError.status_code,
                             authError.error["description"])
 
-            return f(payload, *args, **kwargs)
+            return f(*args, **kwargs)
 
         return wrapper
 

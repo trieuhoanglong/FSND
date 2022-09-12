@@ -85,29 +85,6 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertIn('actors', data)
         self.assertTrue(len(data["actors"]))
 
-    def test_get_actors_by_id(self):
-        """Passing Test for GET /actors/<actor_id>"""
-        res = self.client().get('/actors/1', headers={
-            'Authorization': f"Bearer {self.casting_assistant}"
-        })
-        data = json.loads(res.data)
-
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data["success"])
-        self.assertIn('actor', data)
-        self.assertTrue(len(data["actor"]["movies"]))
-
-    def test_404_get_actors_by_id(self):
-        """Failing Test for GET /actors/<actor_id>"""
-        res = self.client().get('/actors/100', headers={
-            'Authorization': f"Bearer {self.casting_assistant}"
-        })
-        data = json.loads(res.data)
-
-        self.assertEqual(res.status_code, 404)
-        self.assertFalse(data['success'])
-        self.assertIn('message', data)
-
     def test_create_actor_with_casting_assistant(self):
         """Failing Test for POST /actors"""
         res = self.client().post('/actors', headers={
@@ -163,6 +140,29 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertIn('message', data)
 
+    def test_get_actors_by_id(self):
+        """Passing Test for GET /actors/<actor_id>"""
+        res = self.client().get('/actors/1', headers={
+            'Authorization': f"Bearer {self.casting_assistant}"
+        })
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data["success"])
+        self.assertIn('actor', data)
+        self.assertTrue(len(data["actor"]["movies"]))
+
+    def test_404_get_actors_by_id(self):
+        """Failing Test for GET /actors/<actor_id>"""
+        res = self.client().get('/actors/100', headers={
+            'Authorization': f"Bearer {self.casting_assistant}"
+        })
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertFalse(data['success'])
+        self.assertIn('message', data)
+
     def test_delete_actor_with_casting_director(self):
         """Failing Test for DELETE /actors/<actor_id>"""
         res = self.client().delete('/actors/5', headers={
@@ -189,44 +189,6 @@ class CastingAgencyTestCase(unittest.TestCase):
         """Passing Test for DELETE /actors/<actor_id>"""
         res = self.client().delete('/actors/100', headers={
             'Authorization': f"Bearer {self.executive_producer}"
-        })
-        data = json.loads(res.data)
-
-        self.assertEqual(res.status_code, 404)
-        self.assertFalse(data['success'])
-        self.assertIn('message', data)
-
-    def test_get_movies(self):
-        """Passing Test for GET /movies"""
-        res = self.client().get('/movies', headers={
-            'Authorization': f"Bearer {self.casting_assistant}"
-        })
-        data = json.loads(res.data)
-
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(len(data))
-        self.assertTrue(data["success"])
-        self.assertIn('movies', data)
-        self.assertTrue(len(data["movies"]))
-
-    def test_get_movie_by_id(self):
-        """Passing Test for GET /movies/<movie_id>"""
-        res = self.client().get('/movies/1', headers={
-            'Authorization': f"Bearer {self.casting_assistant}"
-        })
-        data = json.loads(res.data)
-
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data["success"])
-        self.assertIn('movie', data)
-        self.assertIn('imdb_rating', data['movie'])
-        self.assertIn('cast', data['movie'])
-        self.assertTrue(len(data["movie"]["cast"]))
-
-    def test_404_get_movie_by_id(self):
-        """Failing Test for GET /movies/<movie_id>"""
-        res = self.client().get('/movies/100', headers={
-            'Authorization': f"Bearer {self.casting_assistant}"
         })
         data = json.loads(res.data)
 
@@ -301,6 +263,44 @@ class CastingAgencyTestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
+        self.assertFalse(data['success'])
+        self.assertIn('message', data)
+
+    def test_get_movies(self):
+        """Passing Test for GET /movies"""
+        res = self.client().get('/movies', headers={
+            'Authorization': f"Bearer {self.casting_assistant}"
+        })
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(len(data))
+        self.assertTrue(data["success"])
+        self.assertIn('movies', data)
+        self.assertTrue(len(data["movies"]))
+
+    def test_get_movie_by_id(self):
+        """Passing Test for GET /movies/<movie_id>"""
+        res = self.client().get('/movies/1', headers={
+            'Authorization': f"Bearer {self.casting_assistant}"
+        })
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data["success"])
+        self.assertIn('movie', data)
+        self.assertIn('imdb_rating', data['movie'])
+        self.assertIn('cast', data['movie'])
+        self.assertTrue(len(data["movie"]["cast"]))
+
+    def test_404_get_movie_by_id(self):
+        """Failing Test for GET /movies/<movie_id>"""
+        res = self.client().get('/movies/100', headers={
+            'Authorization': f"Bearer {self.casting_assistant}"
+        })
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
         self.assertFalse(data['success'])
         self.assertIn('message', data)
 
