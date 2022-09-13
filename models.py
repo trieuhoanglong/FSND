@@ -1,6 +1,7 @@
-from sqlalchemy import Column, String, Integer, ForeignKey, Float, Date
-from flask_sqlalchemy import SQLAlchemy
 import os
+
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column, String, Integer, ForeignKey, Float, Date
 
 database_path = os.environ["DATABASE_URL"]
 if database_path and database_path.startswith("postgres://"):

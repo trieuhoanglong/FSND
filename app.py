@@ -1,8 +1,17 @@
+from os import environ as env
+
+from authlib.integrations.flask_client import OAuth
+from dateutil.parser import parse
+from dotenv import find_dotenv, load_dotenv
 from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
-from dateutil.parser import parse
-from models import setup_db, Actor, Movie, db_drop_and_create_all
+
 from auth import requires_auth
+from models import setup_db, Actor, Movie, db_drop_and_create_all
+
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
 
 
 def is_date(string):
@@ -16,7 +25,19 @@ def is_date(string):
 
 def create_app(test_config=None):
     app = Flask(__name__)
+    app.secret_key = env.get("APP_SECRET_KEY")
+    oauth = OAuth(app)
     setup_db(app)
+
+    oauth.register(
+        "auth0",
+        client_id=env.get("AUTH0_CLIENT_ID"),
+        client_secret=env.get("AUTH0_CLIENT_SECRET"),
+        client_kwargs={
+            "scope": "openid profile email",
+        },
+        server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
+    )
 
     # Uncomment for the first run to initial setup
     # db_drop_and_create_all()

@@ -1,13 +1,19 @@
 import json
-from flask import request, abort
 from functools import wraps
-
-from jose import jwt
 from urllib.request import urlopen
+
+from flask import request, abort
+from jose import jwt
+from dotenv import find_dotenv, load_dotenv
+from os import environ as env
 
 AUTH0_DOMAIN = 'dev-88qykzd8.us.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'fsnd-capstone'
+
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
 
 
 # AuthError Exception

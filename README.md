@@ -10,6 +10,11 @@ Virtual Env: Please download Python 3.10.6 and create venv for this version
 pip install -r requirements.txt:
 This will install all the required packages.
 
+####Key dependency:
+- Flask - a lightweight backend microservices framework. Flask required to handle requests and responses.
+- SQLAlchemy - Famous ORM to handle sqlite database
+- Python Jose - For decode JWT token
+
 To run the server, replace the DATABASE_URL value in setup.sh and run command:
 
 `source setup.sh`
@@ -19,6 +24,12 @@ To run the server, replace the DATABASE_URL value in setup.sh and run command:
 Using the --reload flag will detect file changes and restart the server automatically.
 
 ##Application information
+
+###Motivation
+This application was inspired by Audacity, the goal of this application is to understand all the flow from setting up the database, define routing, authenciation / authorization to have permission in application's action, and to build it to the server up and running
+
+For mentor: I don't have time to make an application for my own, and to build a nice front-end side to interact with the backend, but my goal here is done :), i'm a 6 years experience front-end developer with all famous framework: React, Vue and Angular. Thanks to Udacity, now i'm proud to say that I am a fullstack developer. Now i know how the backend side work, how to work with the cloud and much more things. I will keep continue my learning to archive more, thank you for all the lessions!
+
 ###Overview
 Authentication: This application requires authentication to perform actions. All the endpoints require permissions, except the homepage endpoint, this endpoint is to check if the application is running.
 
