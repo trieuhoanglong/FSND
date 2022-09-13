@@ -4,6 +4,7 @@ from dateutil.parser import parse
 from models import setup_db, Actor, Movie
 from auth import requires_auth
 
+
 def is_date(string):
     try:
         parse(string)
