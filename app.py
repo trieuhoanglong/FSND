@@ -1,7 +1,7 @@
 from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
 from dateutil.parser import parse
-from models import setup_db, Actor, Movie
+from models import setup_db, Actor, Movie, db_drop_and_create_all
 from auth import requires_auth
 
 
@@ -19,7 +19,7 @@ def create_app(test_config=None):
     setup_db(app)
 
     # Uncomment for the first run to initial setup
-    # db_drop_and_create_all()
+    db_drop_and_create_all()
 
     CORS(app, resources={r"/*": {"origins": "*"}})
 
