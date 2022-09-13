@@ -34,7 +34,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         self.invalid_update_actor = {
-            "date_of_birth": "A random sentence"
+            "date_of_birth": ""
         }
 
         self.new_movie = {
@@ -46,7 +46,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.invalid_new_movie = {
             "title": "Titanic",
-            "release_date": "random string",
+            "release_date": "",
             "imdb_rating": 99,
             "cast": ["David Johnson"]
         }
@@ -70,14 +70,14 @@ class CastingAgencyTestCase(unittest.TestCase):
         # Executed after reach test
         pass
 
-    # def test_api_call_without_token(self):
-    #     """Failing Test trying to make a call without token"""
-    #     res = self.client().get('/actors')
-    #     data = json.loads(res.data)
-    #
-    #     self.assertEqual(res.status_code, 401)
-    #     self.assertFalse(data["success"])
-    #
+    def test_api_call_without_token(self):
+        """Failing Test trying to make a call without token"""
+        res = self.client().get('/actors')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 401)
+        self.assertFalse(data["success"])
+
     def test_get_actors(self):
         """Passing Test for GET /actors"""
         res = self.client().get('/actors', headers={
@@ -148,7 +148,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
     def test_get_actors_by_id(self):
         """Passing Test for GET /actors/<actor_id>"""
-        res = self.client().get('/actors/1', headers={
+        res = self.client().get('/actors/3', headers={
             'Authorization': f"Bearer {self.casting_assistant}"
         })
         data = json.loads(res.data)
@@ -169,10 +169,10 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertIn('message', data)
 
-    def test_delete_actor_with_casting_director(self):
+    def test_delete_actor_with_casting_assistant(self):
         """Failing Test for DELETE /actors/<actor_id>"""
-        res = self.client().delete('/actors/5', headers={
-            'Authorization': f"Bearer {self.casting_director}"
+        res = self.client().delete('/actors/1', headers={
+            'Authorization': f"Bearer {self.casting_assistant}"
         })
         data = json.loads(res.data)
 
@@ -182,7 +182,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
     def test_delete_actor_with_executive_producer(self):
         """Passing Test for DELETE /actors/<actor_id>"""
-        res = self.client().delete('/actors/5', headers={
+        res = self.client().delete('/actors/2', headers={
             'Authorization': f"Bearer {self.executive_producer}"
         })
         data = json.loads(res.data)
@@ -235,22 +235,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertFalse(data['success'])
         self.assertIn('message', data)
 
-    def test_update_movie_info_with_casting_director(self):
-        """Passing Test for PATCH /movies/<movie_id>"""
-        res = self.client().patch('/movies/1', headers={
-            'Authorization': f"Bearer {self.casting_director}"
-        }, json=self.update_movie)
-        data = json.loads(res.data)
-
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data["success"])
-        self.assertIn('movie_info', data)
-        self.assertEqual(data["movie_info"]["imdb_rating"],
-                         self.update_movie["imdb_rating"])
-
     def test_update_movie_info_with_executive_producer(self):
         """Passing Test for PATCH /movies/<movie_id>"""
-        res = self.client().patch('/movies/1', headers={
+        res = self.client().patch('/movies/2', headers={
             'Authorization': f"Bearer {self.executive_producer}"
         }, json=self.update_movie)
         data = json.loads(res.data)
@@ -287,7 +274,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
     def test_get_movie_by_id(self):
         """Passing Test for GET /movies/<movie_id>"""
-        res = self.client().get('/movies/1', headers={
+        res = self.client().get('/movies/2', headers={
             'Authorization': f"Bearer {self.casting_assistant}"
         })
         data = json.loads(res.data)
@@ -311,15 +298,15 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertIn('message', data)
 
     def test_delete_movie_with_executive_producer(self):
-        """Failing Test for DELETE /movies/<movie_id>"""
-        res = self.client().delete('/movies/3', headers={
+        """Pass Test for DELETE /movies/<movie_id>"""
+        res = self.client().delete('/movies/1', headers={
             'Authorization': f"Bearer {self.executive_producer}"
         })
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 401)
-        self.assertFalse(data["success"])
-        self.assertIn('message', data)
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data["success"])
+        self.assertIn('success', data)
 
     def test_404_delete_movie(self):
         """Passing Test for DELETE /movies/<movie_id>"""

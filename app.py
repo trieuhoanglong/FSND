@@ -146,7 +146,7 @@ def create_app(test_config=None):
 
     @app.route('/movies/<int:movie_id>')
     @requires_auth("get:movies")
-    def get_movie_by_id(payload, movie_id):
+    def get_movie_by_id(movie_id):
         movie = Movie.query.get_or_404(movie_id)
 
         return jsonify({
