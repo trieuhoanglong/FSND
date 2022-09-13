@@ -26,7 +26,7 @@ Using the --reload flag will detect file changes and restart the server automati
 ##Application information
 
 ###Motivation
-This application was inspired by Audacity, the goal of this application is to understand all the flow from setting up the database, define routing, authenciation / authorization to have permission in application's action, and to build it to the server up and running
+This application was inspired by Udacity, the goal of this application is to understand all the flow from setting up the database, define routing, authenciation / authorization to have permission in application's action, and to build it to the server up and running
 
 For mentor: I don't have time to make an application for my own, and to build a nice front-end side to interact with the backend, but my goal here is done :), i'm a 6 years experience front-end developer with all famous framework: React, Vue and Angular. Thanks to Udacity, now i'm proud to say that I am a fullstack developer. Now i know how the backend side work, how to work with the cloud and much more things. I will keep continue my learning to archive more, thank you for all the lessions!
 
