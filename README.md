@@ -168,7 +168,7 @@ Response: {
 }
 
 ###Testing
-Before run the test, please remember you need to run the setup.sh file by command: `source setup.sh` to set all the role's token to os.environ, after that, you need to run:
+Before run the test, please change the DATABASE_URL in the setup.sh to point to your test_db, after that you need to run the setup.sh file by command: `source setup.sh` to set all the role's token to os.environ, after that, you need to run:
 
 `dropdb fsnd_test` \
 `createdb fsnd_test` \
