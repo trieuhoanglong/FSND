@@ -32,10 +32,10 @@ def create_app(test_config=None):
         return response
 
     @app.route('/')
-    def health():
-        return jsonify({'health': 'Running!!'}), 200
+    def homepage():
+        return jsonify({'status': 'Server is running!!'}), 200
 
-    @app.route('/actors')
+    @app.route('/actors', methods=['GET'])
     @requires_auth("get:actors")
     def get_actors():
         actors_query = Actor.query.order_by(Actor.id).all()
@@ -46,7 +46,7 @@ def create_app(test_config=None):
             "actors": actors
         }), 200
 
-    @app.route('/actors/<int:actor_id>')
+    @app.route('/actors/<int:actor_id>', methods=['GET'])
     @requires_auth("get:actors")
     def get_actor_by_id(actor_id):
         actor = Actor.query.get_or_404(actor_id)
@@ -133,7 +133,7 @@ def create_app(test_config=None):
         except Exception:
             abort(500)
 
-    @app.route('/movies')
+    @app.route('/movies', methods=['GET'])
     @requires_auth("get:movies")
     def get_movies():
         movies_query = Movie.query.order_by(Movie.id).all()
@@ -144,7 +144,7 @@ def create_app(test_config=None):
             "movies": movies
         }), 200
 
-    @app.route('/movies/<int:movie_id>')
+    @app.route('/movies/<int:movie_id>', methods=['GET'])
     @requires_auth("get:movies")
     def get_movie_by_id(movie_id):
         movie = Movie.query.get_or_404(movie_id)

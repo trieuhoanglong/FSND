@@ -8,11 +8,6 @@ if database_path and database_path.startswith("postgres://"):
 
 db = SQLAlchemy()
 
-'''
-setup_db(app)
-    binds a flask application and a SQLAlchemy service
-'''
-
 
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
