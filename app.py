@@ -19,7 +19,7 @@ def create_app(test_config=None):
     setup_db(app)
 
     # Uncomment for the first run to initial setup
-    db_drop_and_create_all()
+    # db_drop_and_create_all()
 
     CORS(app, resources={r"/*": {"origins": "*"}})
 
